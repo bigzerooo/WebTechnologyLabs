@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var log = require('./log')(module);
 var config = require('./config');
+
 mongoose.connect(config.get('mongoose:uri'));  
 
 var db = mongoose.connection;
@@ -36,4 +37,5 @@ Article.path('title').validate(function (v) {
 });
 
 var ArticleModel = mongoose.model('Article', Article);
+
 module.exports.ArticleModel = ArticleModel; 

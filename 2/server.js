@@ -1,8 +1,6 @@
 var express = require('express');
 var app = express();
-
 var path = require('path');
-
 var logger = require('morgan');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
@@ -11,10 +9,15 @@ var methodOverride = require('method-override')
 var log = require('./libs/log')(module); 
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));//путь к иконке
+
 app.use(logger('dev'));//запросы в консоль
+
 app.use(bodyParser());//
+
 app.use(methodOverride());//put and delete
+
 //app.use(app.router); //не надо делает само, устарело
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/api', function (req, res) {
@@ -40,6 +43,7 @@ app.get('/api/articles/:id', function(req, res) {
 app.put('/api/articles/:id', function (req, res){
     res.send('This is not implemented now');
 });
+
 app.delete('/api/articles/:id', function (req, res){
     res.send('This is not implemented now');
 });
