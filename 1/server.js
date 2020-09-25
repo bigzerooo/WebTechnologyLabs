@@ -17,15 +17,13 @@ app.use(bodyParser());//
 
 app.use(methodOverride());//put and delete
 
-//app.use(app.router); //не надо делает само, устарело
-
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/api', function (req, res) {
     res.send('API is running');
 }); 
 
-app.get('/ErrorExample', function(req, res, next){
+app.get('/ErrorExample', function(req, res, next) {
     next(new Error('Random error!'));
 });
 
@@ -36,7 +34,7 @@ app.get('/api/articles', function(req, res) {
         } else {
             res.statusCode = 500;
             log.error('Internal error(%d): %s',
-            res.statusCode,err.message);
+            res.statusCode, err.message);
             return res.send({ error: 'Server error' });
         }
     }); 
@@ -65,7 +63,7 @@ app.post('/api/articles', function(req, res) {
                 res.statusCode = 500;
                 res.send({ error: 'Server error' }); 
             }
-            log.error('Internal error(%d): %s',res.statusCode,err.message);
+            log.error('Internal error(%d): %s', res.statusCode, err.message);
         }
     }); 
 });
@@ -80,13 +78,13 @@ app.get('/api/articles/:id', function(req, res) {
         return res.send({ status: 'OK', article:article });
         } else {
             res.statusCode = 500;
-            log.error('Internal error(%d):  %s',res.statusCode,err.message);
+            log.error('Internal error(%d):  %s', res.statusCode, err.message);
             return res.send({ error: 'Server error' });
         }
     }); 
 });
 
-app.put('/api/articles/:id', function (req, res){
+app.put('/api/articles/:id', function (req, res) {
     return ArticleModel.findById(req.params.id, function (err, article) {
         if(!article) {
             res.statusCode = 404;
@@ -108,13 +106,13 @@ app.put('/api/articles/:id', function (req, res){
                     res.statusCode = 500;
                     res.send({ error: 'Server error' });
                 }  
-                log.error('Internal error(%d): %s',res.statusCode,err.message);
+                log.error('Internal error(%d): %s', res.statusCode, err.message);
             }
         });
     }); 
 });
 
-app.delete('/api/articles/:id', function (req, res){
+app.delete('/api/articles/:id', function (req, res) {
     return ArticleModel.findById(req.params.id, function (err, article) {
         if(!article) {
             res.statusCode = 404;
@@ -126,31 +124,27 @@ app.delete('/api/articles/:id', function (req, res){
                 return res.send({ status: 'OK' });
             } else {
                 res.statusCode = 500;
-                log.error('Internal error(%d): %s',
-                res.statusCode,err.message);
+                log.error('Internal error(%d): %s', res.statusCode, err.message);
                 return res.send({ error: 'Server error' });
             }
         });
     });     
 });
 
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
     res.status(404);
-    log.debug('Not found URL: %s',req.url);
+    log.debug('Not found URL: %s', req.url);
     res.send({ error: 'Not found' });
     return;
 });
 
-app.use(function(err, req, res, next){
+app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    log.error('Internal error(%d): %s',res.statusCode,err.message);
+    log.error('Internal error(%d): %s', res.statusCode, err.message);
     res.send({ error: err.message });
      return;
 });
 
-app.listen(config.get('port'), function(){
+app.listen(config.get('port'), function() {
     log.info('Express server listening on port ' + config.get('port'));
 }); 
-//app.listen(1337, function(){
-//    log.info('Express server listening on port 1337');
-//});
