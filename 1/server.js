@@ -13,7 +13,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));//путь к и
 
 app.use(logger('dev'));//запросы в консоль
 
-app.use(bodyParser());//
+app.use(bodyParser());
 
 app.use(methodOverride());//put and delete
 
@@ -33,8 +33,7 @@ app.get('/api/articles', function(req, res) {
             return res.send(articles);
         } else {
             res.statusCode = 500;
-            log.error('Internal error(%d): %s',
-            res.statusCode, err.message);
+            log.error('Internal error(%d): %s', res.statusCode, err.message);
             return res.send({ error: 'Server error' });
         }
     }); 

@@ -5,14 +5,13 @@ var logger = require('morgan');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
-
 var log = require('./libs/log')(module); 
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));//путь к иконке
 
 app.use(logger('dev'));//запросы в консоль
 
-app.use(bodyParser());//
+app.use(bodyParser());
 
 app.use(methodOverride());//put and delete
 
